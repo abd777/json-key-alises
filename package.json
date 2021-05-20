@@ -1,6 +1,6 @@
 {
   "name": "json-key-alises",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A simple library to compress json data size, used for DB optimization",
   "main": "index.js",
   "scripts": {

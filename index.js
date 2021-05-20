@@ -1,6 +1,29 @@
-const prototype = require('./prototype.json')
+var prototype = {} // for example require('./prototype.json')
+var errors = ['Please call initialize() function to set prototype !']
+
+function initialize(seed) {
+    // flush errors 
+    errors = []
+    //check for seed
+    if (!Object.keys(seed).length) {
+        errors.push("Prototype object can't be empty")
+    } else {
+        prototype = seed
+    }
+}
+
+function errorsExists() {
+    return errors.length > 0 ? true : false
+}
+
+function checkForAnyErrors() {
+    if (errorsExists()) {
+        throw errors[0]
+    }
+}
 
 function getActualKeyFromAlises(collectionToBeSearched, alises) {
+    checkForAnyErrors()
     const collection = prototype[collectionToBeSearched]
     for (let document of Object.entries(collection)) {
         if (document[1] == alises) return document[0]
@@ -8,13 +31,16 @@ function getActualKeyFromAlises(collectionToBeSearched, alises) {
 }
 
 function getAlisesFromKey(collectionToBeSearched, key) {
+    checkForAnyErrors()
     const collection = prototype[collectionToBeSearched]
     for (let document of Object.entries(collection)) {
         if (document[0] == key) return document[1]
     }
+
 }
 
 function convertObjectToAlises(collection, object) {
+    checkForAnyErrors()
     collection = prototype[collection]
     var temporayObject = {}
     for (var key in object) {
@@ -29,6 +55,7 @@ function convertObjectToAlises(collection, object) {
 }
 
 function convertObjectToKeys(collection, object) {
+    checkForAnyErrors()
     collection = prototype[collection]
     var temporayObject = {}
     for (var key in object) {
@@ -45,3 +72,4 @@ module.exports.getActualKeyFromAlises = getActualKeyFromAlises
 module.exports.getAlisesFromKey = getAlisesFromKey
 module.exports.convertObjectToAlises = convertObjectToAlises
 module.exports.convertObjectToKeys = convertObjectToKeys
+module.exports.initialize = initialize
